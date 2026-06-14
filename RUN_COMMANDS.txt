@@ -1,0 +1,110 @@
+╔════════════════════════════════════════════════════════════════════╗
+║          KANTAKA SODHANA — RUN COMMANDS (LOCAL DEVELOPMENT)        ║
+╚════════════════════════════════════════════════════════════════════╝
+
+🚀 OPEN 3 TERMINALS AND RUN THESE IN ORDER:
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TERMINAL 1: Flask Auth Service (Port 5001)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+cd services/kantaka-auth
+pip install -r requirements.txt
+pip install flask flask-sqlalchemy flask-login flask-cors python-dotenv werkzeug
+export FLASK_ENV=development
+export FLASK_DEBUG=true
+export SECRET_KEY=kantaka_dev_secret_2024
+export DATABASE_URL=postgresql://postgres.tdpsbamtqmpadebdlpar:VKqnEeAUr6P2WNgt@aws-1-ap-south-1.pooler.supabase.com:5432/postgres
+python app.py
+
+👉 Expected: "Running on http://127.0.0.1:5001"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TERMINAL 2: FastAPI Backend (Port 8000)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+cd backend
+pip install -r requirements.txt
+pip install email-validator pydantic supabase python-multipart
+export NEXT_PUBLIC_SUPABASE_URL=https://tdpsbamtqmpadebdlpar.supabase.co
+export NEXT_PUBLIC_SUPABASE_ANON_KEY=gOJG9g8oAITQgQeAzHWXFcypjJeci9L0qtFvxlCY
+python -m uvicorn main:app --reload --port 8000
+
+👉 Expected: "Application startup complete."
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+TERMINAL 3: Next.js Frontend (Port 3002)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+npm install
+npm run dev
+
+👉 Expected: "✓ Ready in XXXms"
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🌐 OPEN IN BROWSER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Homepage:        http://localhost:3002
+Login:           http://localhost:3002/login
+Signup:          http://localhost:3002/signup
+Admin Panel:     http://localhost:5001/admin
+Backend Docs:    http://localhost:8000/docs
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+📝 TEST CREDENTIALS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Admin User (Pre-Created):
+  Email:    admin@kantaka.ai
+  Password: Admin@12345
+
+Demo User:
+  1. Go to /signup → Register new account
+  2. Wait for admin approval at /admin
+  3. Login with credentials
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✨ WHAT'S PROTECTED
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✅ PUBLIC (No Login Needed):
+   - Homepage
+   - Contact form
+   - Navigation
+   - About page
+
+🔒 PROTECTED (Login Required):
+   - Usecases carousel
+   - Demo pages (/demo/[id])
+   - Use case details
+   - All interactive demos
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+❓ TROUBLESHOOTING
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Error: "connection refused:5001"
+→ Flask not running. Check Terminal 1
+
+Error: "Auth service unavailable"
+→ Flask service crashed. Restart Terminal 1
+
+Error: "Hydration failed"
+→ Hard refresh browser (Ctrl+Shift+R)
+
+Error: "RLS policy violation"
+→ Already fixed. No action needed.
+
+For more help: See COMPLETE_SETUP.md
+
+╔════════════════════════════════════════════════════════════════════╗
+║                    READY TO TEST! 🚀                              ║
+╚════════════════════════════════════════════════════════════════════╝

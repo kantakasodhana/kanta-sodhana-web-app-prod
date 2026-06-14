@@ -1,0 +1,73 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+/dist/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files (can opt-in for committing if needed)
+.env*
+.env.kantaka
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+batzman.md
+ENV_REFERENCE.md
+.tmp_serve_*.py
+*.tmp.py
+
+# Sub-app virtualenvs & deps (never commit)
+**/venv/
+**/node_modules/
+**/__pycache__/
+**/.pytest_cache/
+
+# Databases & ML model artifacts
+*.db
+*.pkl
+*.sqlite
+*.sqlite3
+backend/artifacts/
+
+# Temp / scratch
+medai_temp/
+**/*.duckdb
+**/Claims/
+
+# Demo/usecase microservices (not part of core platform)
+services/doc-forgery/
+services/dup-tamper/
+services/qr-verify/
+/doc-forgery/
+/dup-tamper/
+/qr-verify/

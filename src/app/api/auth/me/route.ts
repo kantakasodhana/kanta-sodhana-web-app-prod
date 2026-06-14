@@ -1,0 +1,16 @@
+import { NextRequest, NextResponse } from "next/server";
+const FLASK = process.env.FLASK_AUTH_URL ?? "http://localhost:5001";
+export async function GET(req: NextRequest) {
+  try {
+    const res = await fetch(`${FLASK}/api/auth/me`, {
+      method: "GET",
+      headers: { cookie: req.headers.get("cookie") || "" },
+    });
+    const data = await res.json();
+    const r = NextResponse.json(data, { status: res.status });
+    res.headers.getSetCookie?.().forEach((c) => r.headers.append("Set-Cookie", c));
+    return r;
+  } catch (e) {
+    return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+  }
+}

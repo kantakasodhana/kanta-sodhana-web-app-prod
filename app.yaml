@@ -1,0 +1,155 @@
+name: kantaka-sodhana
+services:
+  # Frontend Service
+  - name: frontend
+    source:
+      type: github
+      repo: your-username/kantaka-sodhana-web-app
+      branch: main
+    github_deployment_branch: main
+    build_command: npm run build
+    run_command: npm run start
+    envs:
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        value: ${DB_HOST}
+        scope: RUN_AND_BUILD_TIME
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        value: ${DB_PASSWORD}
+        scope: RUN_AND_BUILD_TIME
+      - key: NEXT_PUBLIC_API_BASE_URL
+        value: https://api.kantaka-sodhana.app/api
+        scope: RUN_AND_BUILD_TIME
+      - key: NEXT_PUBLIC_SENTRY_DSN
+        value: ${SENTRY_DSN}
+        scope: RUN_AND_BUILD_TIME
+      - key: NODE_ENV
+        value: production
+        scope: RUN_AND_BUILD_TIME
+    http_port: 3000
+    health_check:
+      http_path: /
+    http_routes:
+      - path: /
+        component_name: frontend
+    docker:
+      registry_type: DOCKER_HUB
+    source_dir: ./
+
+  # Backend API Service
+  - name: backend
+    source:
+      type: github
+      repo: your-username/kantaka-sodhana-web-app
+      branch: main
+    github_deployment_branch: main
+    build_command: pip install -r backend/requirements.txt
+    run_command: uvicorn backend.main:app --host 0.0.0.0 --port 8080
+    envs:
+      - key: DATABASE_URL
+        value: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+        scope: RUN_TIME
+      - key: SENTRY_DSN
+        value: ${SENTRY_DSN}
+        scope: RUN_TIME
+      - key: ENVIRONMENT
+        value: production
+        scope: RUN_TIME
+    http_port: 8080
+    health_check:
+      http_path: /health
+    http_routes:
+      - path: /api
+        component_name: backend
+    docker:
+      dockerfile_path: Dockerfile
+    source_dir: ./
+
+  # Flask Auth Service
+  - name: auth-service
+    source:
+      type: github
+      repo: your-username/kantaka-sodhana-web-app
+      branch: main
+    github_deployment_branch: main
+    build_command: pip install -r services/kantaka-auth/requirements.txt
+    run_command: gunicorn -w 4 -b 0.0.0.0:8081 services.kantaka-auth.app:app
+    envs:
+      - key: DATABASE_URL
+        value: postgresql://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}
+        scope: RUN_TIME
+      - key: ENVIRONMENT
+        value: production
+        scope: RUN_TIME
+    http_port: 8081
+    health_check:
+      http_path: /health
+    http_routes:
+      - path: /auth
+        component_name: auth-service
+
+# Database Configuration
+databases:
+  - engine: PG
+    name: kantaka-db
+    version: "14"
+    production: true
+    envs:
+      - key: DB_NAME
+        value: kantaka_db
+      - key: DB_USER
+        value: kantaka_user
+      - key: DB_PASSWORD
+        value: ${DB_PASSWORD}
+      - key: DB_HOST
+        value: ${DATABASE_HOST}
+      - key: DB_PORT
+        value: "5432"
+
+static_sites:
+  - name: static-assets
+    source:
+      type: github
+      repo: your-username/kantaka-sodhana-web-app
+      branch: main
+      dir: public
+
+ingress:
+  rules:
+    - component:
+        name: frontend
+      match:
+        path:
+          prefix: /
+    - component:
+        name: backend
+      match:
+        path:
+          prefix: /api
+    - component:
+        name: auth-service
+      match:
+        path:
+          prefix: /auth
+
+regions:
+  - blr
+
+alerts:
+  - spec:
+      rule: CPU_UTILIZATION
+      value: 80
+      window: FIVE_MINUTES
+    notifications:
+      - email: mathireddysumanth@gmail.com
+  - spec:
+      rule: MEM_UTILIZATION
+      value: 85
+      window: FIVE_MINUTES
+    notifications:
+      - email: mathireddysumanth@gmail.com
+  - spec:
+      rule: RESTART_COUNT
+      value: 5
+      window: ONE_HOUR
+    notifications:
+      - email: mathireddysumanth@gmail.com
