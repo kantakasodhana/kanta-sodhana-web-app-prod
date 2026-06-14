@@ -1,18 +1,44 @@
 import { NextRequest, NextResponse } from "next/server";
-const FLASK = process.env.FLASK_AUTH_URL ?? "http://localhost:5001";
+import { getServerSupabase, verifyPassword, setSessionCookie } from "@/lib/auth-server";
+
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.text();
-    const res = await fetch(`${FLASK}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json", cookie: req.headers.get("cookie") || "" },
-      body,
+    const { email, password } = await req.json();
+
+    if (!email || !password) {
+      return NextResponse.json({ error: "Email and password required" }, { status: 400 });
+    }
+
+    const supabase = getServerSupabase();
+    const { data: user, error } = await supabase
+      .from("users")
+      .select("id, username, email, password, is_admin, is_approved")
+      .eq("email", email)
+      .single();
+
+    if (error || !user) {
+      return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+    }
+
+    if (!verifyPassword(password, user.password)) {
+      return NextResponse.json({ error: "Invalid email or password" }, { status: 401 });
+    }
+
+    if (!user.is_approved) {
+      return NextResponse.json({ error: "Account pending approval" }, { status: 403 });
+    }
+
+    await setSessionCookie(user.id);
+
+    // Return user object directly (AuthProvider expects this shape)
+    return NextResponse.json({
+      id: user.id,
+      username: user.username,
+      email: user.email,
+      is_admin: user.is_admin,
+      is_approved: user.is_approved,
     });
-    const data = await res.json();
-    const r = NextResponse.json(data, { status: res.status });
-    res.headers.getSetCookie?.().forEach((c) => r.headers.append("Set-Cookie", c));
-    return r;
   } catch {
-    return NextResponse.json({ error: "Auth service unavailable" }, { status: 503 });
+    return NextResponse.json({ error: "Login failed" }, { status: 500 });
   }
 }
