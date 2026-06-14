@@ -130,7 +130,8 @@ jobs:
 
       - name: Notify Slack (Optional)
         uses: slackapi/slack-github-action@v1
-        if: always()
+        if: always() && secrets.SLACK_WEBHOOK != ''
+        continue-on-error: true
         with:
           webhook-url: ${{ secrets.SLACK_WEBHOOK }}
           payload: |
