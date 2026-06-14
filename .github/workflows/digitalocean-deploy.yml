@@ -8,7 +8,6 @@ on:
 
 env:
   NODE_VERSION: "22.22.3"
-  PYTHON_VERSION: "3.10"
 
 jobs:
   # ─── LINT & TYPE CHECK ───────────────────────────────────────
@@ -53,27 +52,6 @@ jobs:
       - name: Run unit tests
         run: npm run test --if-present || echo "Tests not configured"
 
-  # ─── BACKEND TESTS ───────────────────────────────────────────
-  backend-tests:
-    runs-on: ubuntu-latest
-    name: Backend Tests
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: pip
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r backend/requirements.txt pytest pytest-cov
-
-      - name: Run backend tests
-        run: pytest backend/tests --cov=backend --cov-report=xml || echo "Tests not configured"
-
   # ─── SECURITY SCANNING ───────────────────────────────────────
   security-scan:
     runs-on: ubuntu-latest
@@ -90,35 +68,23 @@ jobs:
       - name: Run npm audit
         run: npm audit --audit-level=moderate || true
 
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-
-      - name: Install security tools
-        run: |
-          pip install bandit semgrep
-
-      - name: Run Bandit (Python security)
-        run: bandit -r backend -f json -o bandit-report.json || true
-
       - name: Run Semgrep (SAST)
-        run: semgrep --config=p/security-audit src backend --json --output=semgrep-report.json || true
+        run: |
+          pip install semgrep
+          semgrep --config=p/security-audit src --json --output=semgrep-report.json || true
 
       - name: Upload security reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-reports
-          path: |
-            bandit-report.json
-            semgrep-report.json
+          path: semgrep-report.json
 
   # ─── BUILD ───────────────────────────────────────────────────
   build:
     runs-on: ubuntu-latest
     name: Build Application
-    needs: [frontend-tests, backend-tests, security-scan]
+    needs: [frontend-tests, security-scan]
     steps:
       - uses: actions/checkout@v4
 
@@ -133,20 +99,9 @@ jobs:
 
       - name: Build Next.js
         run: npm run build
-
-      - name: Setup Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ env.PYTHON_VERSION }}
-          cache: pip
-
-      - name: Install backend dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r backend/requirements.txt
-
-      - name: Validate backend imports
-        run: python -c "import fastapi; from contact_db import save_contact_submission; from contact_route import router; print('✓ Backend OK')"
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
 
   # ─── DEPLOY TO DIGITALOCEAN ──────────────────────────────────
   deploy:
@@ -170,7 +125,6 @@ jobs:
 
       - name: Wait for deployment
         run: |
-          # Wait for deployment to complete (optional, for CI feedback)
           sleep 60
           doctl apps get ${{ secrets.DIGITALOCEAN_APP_ID }} --format ID,Name,Updated
 
