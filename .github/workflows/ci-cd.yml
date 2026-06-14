@@ -8,8 +8,6 @@ on:
 
 env:
   NODE_VERSION: "22.22.3"
-  REGISTRY: ghcr.io
-  IMAGE_NAME: ${{ github.repository }}
 
 jobs:
   # ─── LINT & TYPE CHECK ───────────────────────────────────────
@@ -90,8 +88,6 @@ jobs:
     runs-on: ubuntu-latest
     name: Build Application
     needs: [frontend-tests, security-scan]
-    outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
     steps:
       - uses: actions/checkout@v4
 
@@ -111,71 +107,3 @@ jobs:
           NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
           NEXT_PUBLIC_API_BASE_URL: ${{ secrets.NEXT_PUBLIC_API_BASE_URL }}
 
-      - name: Upload build artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: next-build
-          path: .next
-          retention-days: 1
-
-
-  # ─── DEPLOY TO STAGING ───────────────────────────────────────
-  deploy-staging:
-    runs-on: ubuntu-latest
-    name: Deploy to Staging
-    needs: build
-    if: github.ref == 'refs/heads/develop' && github.event_name == 'push'
-    environment:
-      name: staging
-      url: https://staging.kantaka-sodhana.app
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Deploy to Vercel (Staging)
-        uses: vercel/action@v6
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID_STAGING }}
-          environment: staging
-
-  # ─── DEPLOY TO PRODUCTION ────────────────────────────────────
-  deploy-production:
-    runs-on: ubuntu-latest
-    name: Deploy to Production
-    needs: build
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    environment:
-      name: production
-      url: https://kantaka-sodhana.app
-    concurrency:
-      group: production
-      cancel-in-progress: false
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Deploy to Vercel (Production)
-        uses: vercel/action@v6
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-
-      - name: Notify Slack
-        uses: slackapi/slack-github-action@v1
-        if: always()
-        with:
-          webhook-url: ${{ secrets.SLACK_WEBHOOK }}
-          payload: |
-            {
-              "text": "Production deployment: ${{ job.status }}",
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "*Kantaka Śodhana Production Deploy*\nStatus: `${{ job.status }}`\nCommit: <${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}|${{ github.sha }}>"
-                  }
-                }
-              ]
-            }
