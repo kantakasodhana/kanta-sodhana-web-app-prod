@@ -64,8 +64,10 @@ export default function AdminDashboard() {
   };
 
   useEffect(() => {
-    fetchSubmissions();
-    fetchUsers();
+    const loadData = async () => {
+      await Promise.all([fetchSubmissions(), fetchUsers()]);
+    };
+    loadData();
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -88,7 +90,6 @@ export default function AdminDashboard() {
         subUsers.unsubscribe();
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateSubmissionStatus = async (id: string, newStatus: string) => {

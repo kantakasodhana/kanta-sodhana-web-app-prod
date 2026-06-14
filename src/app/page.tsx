@@ -88,7 +88,7 @@ export default function Home() {
   const [showGate, setShowGate] = useState(!alreadyPassed);
   const [gatePassed, setGatePassed] = useState(alreadyPassed);
   const [activeStack, setActiveStack] = useState("data");
-  const belowFold = useBelowFold();
+  const { ref: belowFoldRef, visible: belowFoldVisible } = useBelowFold();
 
   const handleEnter = () => {
     sessionStorage.setItem("ks-gate-passed", "1");
@@ -121,7 +121,7 @@ export default function Home() {
   const stackData = STACK_CONTENT[activeStack];
 
   useEffect(() => {
-    if (!entered || !belowFold.visible || typeof window === "undefined") return;
+    if (!entered || !belowFoldVisible || typeof window === "undefined") return;
     const sectionId = window.location.hash.slice(1);
     if (!sectionId) return;
 
@@ -130,7 +130,7 @@ export default function Home() {
         document.getElementById(sectionId)?.scrollIntoView({ behavior: "smooth" });
       });
     });
-  }, [belowFold.visible, entered]);
+  }, [belowFoldVisible, entered]);
 
   return (
     <div className="relative">
@@ -264,9 +264,9 @@ export default function Home() {
           </div>
         </section>
 
-        <div ref={belowFold.ref} />
+        <div ref={belowFoldRef} />
 
-        {belowFold.visible && (
+        {belowFoldVisible && (
           <>
             <section id="process" className="relative overflow-hidden border-t border-[var(--border)] px-6 py-24">
               <div className="mx-auto max-w-5xl">

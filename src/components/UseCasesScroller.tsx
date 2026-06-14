@@ -341,6 +341,7 @@ export default function UseCasesScroller() {
   const { user, loading: authLoading } = useAuth();
   const [activeIndex, setActiveIndex] = useState(0);
   const [showAuthGate, setShowAuthGate] = useState(false);
+  const [containerWidth, setContainerWidth] = useState(0);
   const x = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 260, damping: 20 });
   const containerRef = useRef<HTMLDivElement>(null);
@@ -357,8 +358,12 @@ export default function UseCasesScroller() {
   );
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
+    const el = containerRef.current;
+    if (el) setContainerWidth(el.offsetWidth);
+    const obs = new ResizeObserver(([entry]) => setContainerWidth(entry.contentRect.width));
+    if (el) obs.observe(el);
     goTo(0);
+    return () => obs.disconnect();
   }, [goTo]);
 
   useEffect(() => {
@@ -392,10 +397,9 @@ export default function UseCasesScroller() {
               style={{ x: springX }}
               className="flex"
               drag="x"
-              // eslint-disable-next-line react-hooks/refs
               dragConstraints={{
                 left: -(USE_CASES.length - 1) * STEP,
-                right: (containerRef.current?.offsetWidth ?? 0) / 2 - ITEM_WIDTH / 2,
+                right: containerWidth / 2 - ITEM_WIDTH / 2,
               }}
               onDragEnd={(_, info) => {
                 if (info.offset.x < -80) goTo(activeIndex + 1);
