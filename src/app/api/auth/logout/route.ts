@@ -1,16 +1,11 @@
-import { NextRequest, NextResponse } from "next/server";
-const FLASK = process.env.FLASK_AUTH_URL ?? "http://localhost:5001";
-export async function POST(req: NextRequest) {
+import { NextResponse } from "next/server";
+import { clearSessionCookie } from "@/lib/auth-server";
+
+export async function POST() {
   try {
-    const res = await fetch(`${FLASK}/api/auth/logout`, {
-      method: "POST",
-      headers: { cookie: req.headers.get("cookie") || "" },
-    });
-    const data = await res.json();
-    const r = NextResponse.json(data, { status: res.status });
-    res.headers.getSetCookie?.().forEach((c) => r.headers.append("Set-Cookie", c));
-    return r;
+    await clearSessionCookie();
+    return NextResponse.json({ message: "Logged out" });
   } catch {
-    return NextResponse.json({ error: "Logout failed" }, { status: 503 });
+    return NextResponse.json({ error: "Logout failed" }, { status: 500 });
   }
 }
