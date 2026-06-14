@@ -162,6 +162,7 @@ export default function RulerCarousel({ items }: { items: CarouselItem[] }) {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     goTo(0);
   }, [goTo]);
 
@@ -183,7 +184,8 @@ export default function RulerCarousel({ items }: { items: CarouselItem[] }) {
           style={{ x: springX }}
           className="flex"
           drag="x"
-          dragConstraints={{
+          // eslint-disable-next-line react-hooks/refs
+        dragConstraints={{
             left: -(items.length - 1) * STEP,
             right: (containerRef.current?.offsetWidth ?? 0) / 2 - ITEM_WIDTH / 2,
           }}

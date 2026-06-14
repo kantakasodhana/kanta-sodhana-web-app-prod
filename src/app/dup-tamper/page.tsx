@@ -1,8 +1,8 @@
 "use client";
 
-import { useState, useRef, useCallback } from "react";
+import { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Upload, X, AlertTriangle, CheckCircle, Copy } from "lucide-react";
+import { Upload, X, AlertTriangle, CheckCircle } from "lucide-react";
 
 type Result = {
   verdict: string;

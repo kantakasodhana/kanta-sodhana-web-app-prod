@@ -1,8 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef } from "react";
-import Papa from "papaparse";
-import { Upload, Filter } from "lucide-react";
+import { Upload } from "lucide-react";
 
 // ── Package metadata ───────────────────────────────────────
 

@@ -32,6 +32,7 @@ function GlitchLine({
 
   useEffect(() => {
     if (!isGlitching) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDisplay(text);
       return;
     }
@@ -74,12 +75,12 @@ export default function SweepText() {
   const [isGlitching, setIsGlitching] = useState(false);
   const [sweepHit, setSweepHit] = useState(false);
   const lastCycleRef = useRef(0);
-  const startTimeRef = useRef(Date.now());
 
   const timersRef = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => {
-    return () => timersRef.current.forEach(clearTimeout);
+    const timers = timersRef.current;
+    return () => timers.forEach(clearTimeout);
   }, []);
 
   const cycle = useCallback(() => {

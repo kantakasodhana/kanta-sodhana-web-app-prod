@@ -3,6 +3,7 @@
 // Suppress hydration warnings in development
 if (typeof window !== "undefined") {
   const originalError = console.error;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   console.error = (...args: any[]) => {
     if (args[0]?.includes?.("Hydration failed")) return;
     originalError(...args);
@@ -18,13 +19,11 @@ import ScrollCard from "@/components/ScrollCard";
 import ProgressiveBlur from "@/components/ProgressiveBlur";
 import TextRotate from "@/components/TextRotate";
 import ChamberIntro from "@/components/ChamberIntro";
-import SecureContactForm from "@/components/SecureContactForm";
 import CountUp from "@/components/CountUp";
 import {
   HOMEPAGE_ACHIEVEMENTS,
   HOMEPAGE_CHAMBERS,
   HOMEPAGE_PROCESS_STEPS,
-  HOMEPAGE_TEAM_MEMBERS,
   STACK_CONTENT,
   STACK_SEGMENTS,
 } from "@/lib/homepage";
@@ -41,7 +40,6 @@ const RulerCarousel = dynamic(() => import("@/components/RulerCarousel"), {
     </div>
   ),
 });
-const TeamShowcase = dynamic(() => import("@/components/TeamShowcase"), { ssr: false });
 const EnterGate = dynamic(() => import("@/components/EnterGate"), { ssr: false });
 const GLSLTerrain = dynamic(() => import("@/components/GLSLTerrain"), { ssr: false });
 const SweepText = dynamic(() => import("@/components/SweepText"), { ssr: false });
@@ -354,7 +352,12 @@ export default function Home() {
                   </p>
                 </ScrollCard>
                 <ScrollCard delay={0.2}>
-                  <SecureContactForm />
+                  <a
+                    href="/contact"
+                    className="inline-block rounded-full border border-[var(--accent)] bg-[var(--accent)]/10 px-8 py-3 font-mono text-sm font-bold uppercase tracking-[0.2em] text-[var(--accent)] transition-all hover:bg-[var(--accent)] hover:text-white"
+                  >
+                    Open Contact Channel
+                  </a>
                 </ScrollCard>
               </div>
             </section>

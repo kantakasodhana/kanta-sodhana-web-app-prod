@@ -1,12 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { motion } from "framer-motion";
 
 export default function LoginPage() {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -34,7 +32,7 @@ export default function LoginPage() {
 
       // Reload page to sync auth state
       window.location.href = "/#use-cases";
-    } catch (err) {
+    } catch {
       setError("Connection error");
     } finally {
       setLoading(false);

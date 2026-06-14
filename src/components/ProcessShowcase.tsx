@@ -195,7 +195,7 @@ function GovernViz() {
       const x = (w / points) * i;
       const drift = i > points * 0.55 ? (i - points * 0.55) * 0.8 : 0;
       const y = baseline - drift - Math.sin(i * 0.3 + t * 2) * 12 - Math.sin(i * 0.7 + t) * 5;
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+      if (i === 0) { ctx.moveTo(x, y); } else { ctx.lineTo(x, y); }
     }
     ctx.strokeStyle = "rgba(255,77,0,0.7)";
     ctx.lineWidth = 2;

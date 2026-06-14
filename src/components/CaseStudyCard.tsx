@@ -49,11 +49,10 @@ function Redacted({ children }: { children: React.ReactNode }) {
 
 export default function CaseStudyCard({
   study,
-  index,
   reverse = false,
 }: {
   study: CaseStudy;
-  index: number;
+  index?: number;
   reverse?: boolean;
 }) {
   return (

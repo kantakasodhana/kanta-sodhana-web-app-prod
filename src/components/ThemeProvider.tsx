@@ -19,6 +19,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   // Hydrate from localStorage on mount
   useEffect(() => {
     const saved = localStorage.getItem("ks-theme") as Theme | null;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (saved === "light" || saved === "dark") setTheme(saved);
   }, []);
 

@@ -28,33 +28,6 @@ export default function AdminDashboard() {
   const [filter, setFilter] = useState<"all" | "new" | "reviewed" | "resolved">("all");
   const [activeTab, setActiveTab] = useState<"submissions" | "users">("submissions");
 
-  useEffect(() => {
-    fetchSubmissions();
-    fetchUsers();
-
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createClient(supabaseUrl, supabaseKey);
-
-      const subSubmissions = supabase
-        .channel("contact_submissions")
-        .on("postgres_changes", { event: "*", schema: "public", table: "contact_submissions" }, () => fetchSubmissions())
-        .subscribe();
-
-      const subUsers = supabase
-        .channel("users")
-        .on("postgres_changes", { event: "*", schema: "public", table: "users" }, () => fetchUsers())
-        .subscribe();
-
-      return () => {
-        subSubmissions.unsubscribe();
-        subUsers.unsubscribe();
-      };
-    }
-  }, []);
-
   const fetchSubmissions = async () => {
     try {
       const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -89,6 +62,34 @@ export default function AdminDashboard() {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchSubmissions();
+    fetchUsers();
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && supabaseKey) {
+      const supabase = createClient(supabaseUrl, supabaseKey);
+
+      const subSubmissions = supabase
+        .channel("contact_submissions")
+        .on("postgres_changes", { event: "*", schema: "public", table: "contact_submissions" }, () => fetchSubmissions())
+        .subscribe();
+
+      const subUsers = supabase
+        .channel("users")
+        .on("postgres_changes", { event: "*", schema: "public", table: "users" }, () => fetchUsers())
+        .subscribe();
+
+      return () => {
+        subSubmissions.unsubscribe();
+        subUsers.unsubscribe();
+      };
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const updateSubmissionStatus = async (id: string, newStatus: string) => {
     try {

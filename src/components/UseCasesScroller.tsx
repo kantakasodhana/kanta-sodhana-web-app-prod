@@ -357,6 +357,7 @@ export default function UseCasesScroller() {
   );
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     goTo(0);
   }, [goTo]);
 
@@ -391,6 +392,7 @@ export default function UseCasesScroller() {
               style={{ x: springX }}
               className="flex"
               drag="x"
+              // eslint-disable-next-line react-hooks/refs
               dragConstraints={{
                 left: -(USE_CASES.length - 1) * STEP,
                 right: (containerRef.current?.offsetWidth ?? 0) / 2 - ITEM_WIDTH / 2,

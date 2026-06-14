@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const r = NextResponse.json(data, { status: res.status });
     res.headers.getSetCookie?.().forEach((c) => r.headers.append("Set-Cookie", c));
     return r;
-  } catch (e) {
+  } catch {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
   }
 }

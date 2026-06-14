@@ -15,6 +15,7 @@ export default function PageTransition({
 
   useEffect(() => {
     if (pathname !== prevPath) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setShowFlash(true);
       const timer = setTimeout(() => setShowFlash(false), 400);
       setPrevPath(pathname);
