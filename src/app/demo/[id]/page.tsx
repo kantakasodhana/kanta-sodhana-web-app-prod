@@ -142,7 +142,7 @@ const DEMOS = [
       { label: "User Rating", value: "4.8★" },
     ],
     tech: ["Next.js", "Supabase", "OpenAI", "TypeScript", "Tailwind"],
-    video: "",
+    video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/medoo-consultation.mp4",
   },
   {
     id: "uc-medai",
@@ -159,7 +159,7 @@ const DEMOS = [
       { label: "Fraud Detection", value: "12%" },
     ],
     tech: ["Flask", "MedGemma", "Gemma 3", "Ollama", "SQLite", "OpenCV"],
-    video: "",
+    video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/medai-adjudication.mp4",
   },
   {
     id: "uc-whatsapp-face",
@@ -176,7 +176,7 @@ const DEMOS = [
       { label: "App Install", value: "Zero" },
     ],
     tech: ["WhatsApp API", "MediaPipe", "Face Recognition", "FastAPI", "OpenCV"],
-    video: "",
+    video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/face-verification.mp4",
   },
   {
     id: "uc-resume",
