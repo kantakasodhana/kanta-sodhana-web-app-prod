@@ -3,7 +3,7 @@
 import { useParams, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Play } from "lucide-react";
+import { Play, ExternalLink } from "lucide-react";
 import CountUp from "@/components/CountUp";
 import ProtectedSection from "@/components/ProtectedSection";
 
@@ -24,6 +24,7 @@ const DEMOS = [
     ],
     tech: ["XGBoost", "FastAPI", "SHAP", "Recharts", "Platt Scaling"],
     video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/risk-scoring.mp4",
+    demoUrl: "https://risk-scoring.streamlit.app/",
   },
   {
     id: "uc-docforgery",
@@ -75,6 +76,7 @@ const DEMOS = [
     ],
     tech: ["OpenCV", "imagehash", "scikit-image", "FastAPI", "SSIM"],
     video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/duplication-tampering.mp4",
+    demoUrl: "https://duplication-and-tampering.streamlit.app/",
   },
   {
     id: "uc-qrverify",
@@ -109,6 +111,7 @@ const DEMOS = [
     ],
     tech: ["Next.js", "PapaParse", "Recharts", "TypeScript"],
     video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/same-day-admission.mp4",
+    demoUrl: "https://same-day-admission-discharge-tks.streamlit.app/",
   },
   {
     id: "uc-family",
@@ -126,6 +129,7 @@ const DEMOS = [
     ],
     tech: ["Next.js", "PapaParse", "Recharts", "TypeScript"],
     video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/family-cluster.mp4",
+    demoUrl: "https://family-cluster-tks.streamlit.app/",
   },
   {
     id: "uc-medoo",
@@ -277,6 +281,26 @@ export default function DemoPage() {
               )}
             </div>
           </motion.div>
+
+          {/* Try Live Demo */}
+          {demo.demoUrl && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.05 }}
+              className="flex justify-center"
+            >
+              <a
+                href={demo.demoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[var(--accent)] text-white font-mono text-xs uppercase tracking-[0.2em] hover:brightness-110 hover:scale-105 transition-all duration-300 shadow-lg shadow-[var(--accent)]/20"
+              >
+                <ExternalLink size={16} />
+                Try Live Demo
+              </a>
+            </motion.div>
+          )}
 
           {/* Description */}
           <motion.div
