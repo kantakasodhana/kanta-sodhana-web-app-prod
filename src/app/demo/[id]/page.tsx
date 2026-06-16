@@ -23,7 +23,7 @@ const DEMOS = [
       { label: "Fraud Caught", value: "$42M" },
     ],
     tech: ["XGBoost", "FastAPI", "SHAP", "Recharts", "Platt Scaling"],
-    video: "",
+    video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/risk-scoring.mp4",
   },
   {
     id: "uc-docforgery",
@@ -74,7 +74,7 @@ const DEMOS = [
       { label: "Speed", value: "<2s" },
     ],
     tech: ["OpenCV", "imagehash", "scikit-image", "FastAPI", "SSIM"],
-    video: "",
+    video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/duplication-tampering.mp4",
   },
   {
     id: "uc-qrverify",
@@ -108,7 +108,7 @@ const DEMOS = [
       { label: "Export Format", value: "CSV" },
     ],
     tech: ["Next.js", "PapaParse", "Recharts", "TypeScript"],
-    video: "",
+    video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/same-day-admission.mp4",
   },
   {
     id: "uc-family",
@@ -125,7 +125,7 @@ const DEMOS = [
       { label: "Cluster Scoring", value: "Automated" },
     ],
     tech: ["Next.js", "PapaParse", "Recharts", "TypeScript"],
-    video: "",
+    video: "https://kjadudctpnweailiaeor.supabase.co/storage/v1/object/public/demos/family-cluster.mp4",
   },
   {
     id: "uc-medoo",
