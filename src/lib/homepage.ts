@@ -41,6 +41,7 @@ export const HOMEPAGE_ACHIEVEMENTS: CarouselItem[] = [
     recordId: "ARC-PS02-2026",
     authority: "NHA VERIFIED",
     recordStatus: "FILE OPENED",
+    slug: "ps-02-radiology",
   },
   {
     id: 2,
@@ -54,6 +55,7 @@ export const HOMEPAGE_ACHIEVEMENTS: CarouselItem[] = [
     recordId: "ARC-PS03-2026",
     authority: "NHA VERIFIED",
     recordStatus: "SEALED RECORD",
+    slug: "ps-03-document-forgery",
   },
   {
     id: 3,
