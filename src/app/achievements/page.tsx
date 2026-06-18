@@ -10,8 +10,9 @@ const ACHIEVEMENTS: CarouselItem[] = [
     subtitle: "National Health Authority",
     description:
       "Radiological image-based correlation — built an AI pipeline to detect anomalies across radiology scans, correlating findings across modalities to surface fraud patterns in health claim submissions.",
-    year: "2024",
+    year: "2026",
     meta: "PS-02 · Radiology",
+    slug: "ps-02-radiology",
   },
   {
     id: 2,
@@ -20,8 +21,9 @@ const ACHIEVEMENTS: CarouselItem[] = [
     subtitle: "National Health Authority",
     description:
       "Document forgery detection — engineered a multi-modal verification system to identify tampered or forged medical documents, combining OCR, layout analysis, and anomaly scoring.",
-    year: "2024",
+    year: "2026",
     meta: "PS-03 · Document Integrity",
+    slug: "ps-03-document-forgery",
   },
   {
     id: 3,
@@ -58,7 +60,7 @@ export default function AchievementsPage() {
           {[
             { value: "2", label: "Hackathon Podiums" },
             { value: "NHA", label: "National Health Authority" },
-            { value: "2024", label: "Year of Recognition" },
+            { value: "2026", label: "Year of Recognition" },
           ].map((s) => (
             <div
               key={s.label}
@@ -80,7 +82,7 @@ export default function AchievementsPage() {
         {/* Bottom note */}
         <div className="mt-20 text-center border-t border-[var(--border)] pt-12">
           <p className="font-mono text-[10px] tracking-[0.4em] uppercase text-[var(--text-muted)]">
-            Kantaka Śodhana · Recognition Log · Updated 2024
+            Kantaka Śodhana · Recognition Log · Updated 2026
           </p>
         </div>
       </div>
