@@ -1,8 +1,14 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useCallback } from "react";
+import { createContext, useContext, useEffect, useState, useCallback, useRef } from "react";
 
 const AUTH_API = "";
+const SESSION_POLL_MS = 5 * 60 * 1000;
+
+function getCsrfToken(): string {
+  const match = document.cookie.match(/(?:^|;\s*)ks_csrf=([^;]*)/);
+  return match ? decodeURIComponent(match[1]) : "";
+}
 
 export type AuthUser = {
   id: number;
@@ -31,6 +37,7 @@ const AuthContext = createContext<AuthState>({
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const pollRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const refresh = useCallback(async () => {
     try {
@@ -52,6 +59,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
     refresh();
+    pollRef.current = setInterval(() => {
+      refresh();
+    }, SESSION_POLL_MS);
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
   }, [refresh]);
 
   const login = async (email: string, password: string) => {
@@ -74,6 +87,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const logout = async () => {
     await fetch(`${AUTH_API}/api/auth/logout`, {
       method: "POST",
+      headers: { "X-CSRF-Token": getCsrfToken() },
       credentials: "include",
     });
     setUser(null);

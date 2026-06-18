@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { getServerSupabase, getSessionUserId } from "@/lib/auth-server";
+import { getServerSupabase, getSessionUserId, refreshSession } from "@/lib/auth-server";
 
 export async function GET() {
   try {
@@ -19,7 +19,8 @@ export async function GET() {
       return NextResponse.json({ error: "User not found" }, { status: 401 });
     }
 
-    // Return user object directly (AuthProvider expects this shape)
+    await refreshSession(user.id);
+
     return NextResponse.json(user);
   } catch {
     return NextResponse.json({ error: "Not authenticated" }, { status: 401 });

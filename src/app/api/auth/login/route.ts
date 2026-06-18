@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getServerSupabase, verifyPassword, setSessionCookie } from "@/lib/auth-server";
+import { getServerSupabase, verifyPassword, setSessionCookie, setCsrfToken } from "@/lib/auth-server";
 
 export async function POST(req: NextRequest) {
   try {
@@ -29,8 +29,8 @@ export async function POST(req: NextRequest) {
     }
 
     await setSessionCookie(user.id);
+    await setCsrfToken();
 
-    // Return user object directly (AuthProvider expects this shape)
     return NextResponse.json({
       id: user.id,
       username: user.username,
