@@ -327,9 +327,11 @@ export default function Home() {
               </div>
             </section>
 
-            <ProtectedSection>
-              <UseCasesScroller />
-            </ProtectedSection>
+            <section id="use-cases" className="relative overflow-hidden border-t border-[var(--border)]">
+              <ProtectedSection>
+                <UseCasesScroller />
+              </ProtectedSection>
+            </section>
 
             <section id="contact" className="relative overflow-hidden border-t border-[var(--border)] px-6 py-32">
               <div className="pointer-events-none absolute left-1/2 top-0 -translate-x-1/2 -translate-y-1/4 opacity-30">
