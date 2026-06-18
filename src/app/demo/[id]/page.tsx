@@ -3,7 +3,7 @@
 import { useParams, useSearchParams } from "next/navigation";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { Play, ExternalLink } from "lucide-react";
+import { Play, ExternalLink, Award } from "lucide-react";
 import CountUp from "@/components/CountUp";
 import ProtectedSection from "@/components/ProtectedSection";
 
@@ -201,6 +201,11 @@ const DEMOS = [
   },
 ];
 
+const DEMO_TO_ACHIEVEMENT: Record<string, { slug: string; label: string }> = {
+  "uc-medai": { slug: "ps-02-radiology", label: "Runner-up — NHA Hackathon PS-02" },
+  "uc-docforgery": { slug: "ps-03-document-forgery", label: "3rd Place — NHA Hackathon PS-03" },
+};
+
 const STATUS_COLORS: Record<string, string> = {
   DEPLOYED: "border-emerald-500/30 text-emerald-400 bg-emerald-500/10",
   RESOLVED: "border-blue-500/30 text-blue-400 bg-blue-500/10",
@@ -351,6 +356,28 @@ export default function DemoPage() {
               ))}
             </div>
           </motion.div>
+
+          {/* Related Achievement */}
+          {DEMO_TO_ACHIEVEMENT[demo.id] && (
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.35 }}
+            >
+              <Link
+                href={`/achievements/${DEMO_TO_ACHIEVEMENT[demo.id].slug}`}
+                className="flex items-center gap-4 rounded-2xl border border-[var(--accent)]/20 bg-[var(--accent)]/5 p-6 hover:border-[var(--accent)]/50 transition group"
+              >
+                <Award size={20} className="text-[var(--accent)] shrink-0" />
+                <div>
+                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--accent)] mb-1">Hackathon Achievement</p>
+                  <p className="font-bold text-[var(--text)] group-hover:text-[var(--accent)] transition">
+                    {DEMO_TO_ACHIEVEMENT[demo.id].label}
+                  </p>
+                </div>
+              </Link>
+            </motion.div>
+          )}
 
           {/* CTA */}
           <motion.div

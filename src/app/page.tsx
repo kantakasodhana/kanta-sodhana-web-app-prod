@@ -134,6 +134,18 @@ export default function Home() {
 
   return (
     <div className="relative">
+      {/* SEO: Crawlable description for search engines — hidden visually */}
+      <div className="sr-only">
+        <p>
+          Kantaka Sodhana is an AI and MLOps platform for healthcare insurance fraud detection.
+          Built for the National Health Authority of India, our system detects forged medical documents,
+          radiology report mismatches, duplicate claims, same-day discharge fraud, and family clustering anomalies
+          in Ayushman Bharat PM-JAY insurance claims. Winner at the NHA AB PM-JAY Auto-Adjudication Hackathon 2026
+          at IISc Bengaluru. Technologies include PyTorch, FastAPI, Next.js, computer vision, NLP, OCR,
+          SHA-256 document verification, and deep learning models for deepfake detection.
+        </p>
+      </div>
+
       {showGate && !gatePassed && (
         <EnterGate onEnter={handleEnter} onGateGone={handleGateGone} />
       )}
@@ -169,6 +181,12 @@ export default function Home() {
               {SITE.description}
             </p>
 
+            {/* SEO: always-rendered H1 for crawlers, visually replaced by SweepText after gate */}
+            {!entered && (
+              <h1 className="sr-only">
+                Kantaka Sodhana — AI-Powered Healthcare Fraud Detection Platform
+              </h1>
+            )}
             <div
               className="transition-all duration-1000 ease-out"
               style={{

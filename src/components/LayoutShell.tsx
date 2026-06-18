@@ -30,13 +30,19 @@ export default function LayoutShell({
 
   return (
     <>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[200] focus:rounded-full focus:bg-[var(--accent)] focus:px-4 focus:py-2 focus:text-white focus:font-mono focus:text-xs"
+      >
+        Skip to content
+      </a>
       <ClientCursor />
       <Preloader />
       <ScrollProgress />
       <GrainOverlay />
       <Navigation />
       <PageTransition>
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">{children}</main>
       </PageTransition>
       <Footer />
     </>

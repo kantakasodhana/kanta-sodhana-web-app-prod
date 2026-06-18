@@ -437,6 +437,7 @@ export default function UseCasesScroller() {
         {/* Bottom dots */}
         <div className="mt-6 flex items-center justify-center gap-6">
           <button
+            aria-label="Previous use case"
             onClick={() => goTo(activeIndex - 1)}
             disabled={activeIndex === 0}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-muted)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-20"
@@ -448,6 +449,7 @@ export default function UseCasesScroller() {
             {USE_CASES.map((_, i) => (
               <button
                 key={i}
+                aria-label={`Go to use case ${i + 1}`}
                 onClick={() => goTo(i)}
                 className="h-1 rounded-full transition-all duration-300"
                 style={{
@@ -459,6 +461,7 @@ export default function UseCasesScroller() {
           </div>
 
           <button
+            aria-label="Next use case"
             onClick={() => goTo(activeIndex + 1)}
             disabled={activeIndex === USE_CASES.length - 1}
             className="flex h-10 w-10 items-center justify-center rounded-full border border-[var(--border)] text-[var(--text-muted)] transition-all hover:border-[var(--accent)] hover:text-[var(--accent)] disabled:opacity-20"

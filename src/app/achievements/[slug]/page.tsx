@@ -208,8 +208,8 @@ export default function AchievementArticlePage() {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg)]">
-      <div className="border-b border-[var(--border)]">
+    <article className="min-h-screen bg-[var(--bg)]">
+      <header className="border-b border-[var(--border)]">
         <div className="max-w-4xl mx-auto px-6 py-12 md:py-20">
           <Link
             href="/achievements"
@@ -258,7 +258,7 @@ export default function AchievementArticlePage() {
             </div>
           </motion.div>
         </div>
-      </div>
+      </header>
 
       {article.heroImage && (
         <motion.div
@@ -486,6 +486,6 @@ export default function AchievementArticlePage() {
           </p>
         </div>
       </div>
-    </div>
+    </article>
   );
 }
