@@ -376,7 +376,7 @@ export default function UseCasesScroller() {
   }, [activeIndex, goTo]);
 
   return (
-    <section id="use-cases" className="relative overflow-hidden border-t border-[var(--border)] py-24">
+    <div className="py-24">
       <div className="mx-auto max-w-7xl px-6">
         {/* Header */}
         <ScrollCard className="mb-16">
@@ -478,6 +478,6 @@ export default function UseCasesScroller() {
           <AuthGateModal onClose={() => setShowAuthGate(false)} />
         )}
       </AnimatePresence>
-    </section>
+    </div>
   );
 }
