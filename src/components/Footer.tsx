@@ -25,13 +25,35 @@ export default function Footer() {
             </p>
           </div>
 
-          {/* Nav */}
-          <nav className="flex flex-col gap-2">
+          {/* Nav — Sections */}
+          <nav aria-label="Footer sections" className="flex flex-col gap-2">
+            <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[var(--accent)] mb-1">Sections</span>
             {[
               { label: "Process", href: "/#process" },
               { label: "Stack", href: "/#stack" },
-              { label: "Wins", href: "/#wins" },
+              { label: "Use Cases", href: "/#use-cases" },
+              { label: "Achievements", href: "/#wins" },
               { label: "Contact", href: "/#contact" },
+            ].map((l) => (
+              <Link
+                key={l.href}
+                href={l.href}
+                className="font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--text-muted)] hover:text-[var(--accent)] transition-colors duration-200 w-fit"
+              >
+                {l.label}
+              </Link>
+            ))}
+          </nav>
+
+          {/* Nav — Pages */}
+          <nav aria-label="Footer pages" className="flex flex-col gap-2">
+            <span className="font-mono text-[9px] tracking-[0.3em] uppercase text-[var(--accent)] mb-1">Explore</span>
+            {[
+              { label: "What We Do", href: "/what-we-do" },
+              { label: "What We Build", href: "/what-we-build" },
+              { label: "Team", href: "/team" },
+              { label: "Achievements", href: "/achievements" },
+              { label: "Contact", href: "/contact" },
             ].map((l) => (
               <Link
                 key={l.href}

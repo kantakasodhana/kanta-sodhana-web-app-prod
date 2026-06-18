@@ -91,6 +91,10 @@ export default function RootLayout({
       className="h-full antialiased"
     >
       <head>
+        <link rel="preconnect" href="https://kjadudctpnweailiaeor.supabase.co" />
+        <link rel="dns-prefetch" href="https://kjadudctpnweailiaeor.supabase.co" />
+        <meta name="theme-color" content="#030305" media="(prefers-color-scheme: dark)" />
+        <meta name="theme-color" content="#F5F0E8" media="(prefers-color-scheme: light)" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORG_JSONLD) }}
