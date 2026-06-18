@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect, useCallback } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export interface CarouselItem {
   id: number;
@@ -15,6 +16,7 @@ export interface CarouselItem {
   recordId?: string;
   authority?: string;
   recordStatus?: string;
+  slug?: string;
 }
 
 const ITEM_WIDTH = 340;
@@ -139,6 +141,15 @@ function CarouselCard({
             </span>
           )}
         </div>
+      )}
+
+      {item.slug && isActive && (
+        <Link
+          href={`/achievements/${item.slug}`}
+          className="mt-5 inline-flex items-center gap-2 rounded-full border border-[var(--accent)]/30 bg-[var(--accent)]/10 px-4 py-2 font-mono text-[10px] tracking-[0.2em] uppercase text-[var(--accent)] hover:bg-[var(--accent)]/20 transition"
+        >
+          Read Full Article →
+        </Link>
       )}
     </motion.div>
   );
