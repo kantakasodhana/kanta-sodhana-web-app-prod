@@ -82,7 +82,7 @@ export default function Footer() {
         {/* Divider */}
         <div className="border-t border-[var(--border)] pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
           <p className="font-mono text-[9px] tracking-wider text-[var(--text-muted)]">
-            © {new Date().getFullYear()} {SITE.name}. All rights reserved.
+            © {new Date().getFullYear()} Kantaka Sodhana LLP. All rights reserved.
           </p>
           <p className="font-mono text-[9px] tracking-wider text-[var(--text-muted)]">
             {SITE.coordinates}

@@ -2,7 +2,7 @@ export const SITE = {
   name: "Kantaka Śodhana",
   tagline: "Removing the Thorns of Deception",
   description: "AI & MLOps Platform",
-  coordinates: "12.9716° N, 77.5946° E",
+  coordinates: "17.3850° N, 78.4867° E",
 } as const;
 
 export const NAV_LINKS = [
