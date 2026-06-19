@@ -71,10 +71,16 @@ export const metadata: Metadata = {
 const ORG_JSONLD = {
   "@context": "https://schema.org",
   "@type": "Organization",
-  name: "Kantaka Sodhana",
+  name: "Kantaka Sodhana LLP",
   url: SITE_URL,
   logo: SITE_URL + "/og-image.png",
   description: SITE_DESC,
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Hyderabad",
+    addressRegion: "Telangana",
+    addressCountry: "IN",
+  },
   sameAs: ["https://github.com/Sumanth-tks/kanta-sodhana-web-app"],
 };
 
