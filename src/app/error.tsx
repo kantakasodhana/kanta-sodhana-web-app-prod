@@ -75,7 +75,7 @@ export default function ErrorPage({
           System Fault
         </p>
 
-        <div className="font-mono text-[120px] md:text-[200px] font-bold leading-none text-[var(--text)] opacity-10 select-none mb-4">
+        <div className="font-mono text-[80px] sm:text-[120px] md:text-[200px] font-bold leading-none text-[var(--text)] opacity-10 select-none mb-4">
           500
         </div>
 
