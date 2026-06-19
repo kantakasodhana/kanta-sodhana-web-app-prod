@@ -47,7 +47,7 @@ export default function AchievementsPage() {
           <p className="font-mono text-[10px] tracking-[0.5em] text-[var(--accent)] uppercase mb-4">
             Track Record
           </p>
-          <h1 className="font-mono text-5xl md:text-7xl font-bold text-[var(--text)] leading-tight mb-6">
+          <h1 className="font-mono text-4xl sm:text-5xl md:text-7xl font-bold text-[var(--text)] leading-tight mb-6">
             Achievements
           </h1>
           <p className="font-mono text-sm text-[var(--text-muted)] max-w-md mx-auto leading-relaxed">

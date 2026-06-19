@@ -19,9 +19,14 @@ export interface CarouselItem {
   slug?: string;
 }
 
-const ITEM_WIDTH = 340;
 const ITEM_GAP = 24;
-const STEP = ITEM_WIDTH + ITEM_GAP;
+
+function getItemWidth() {
+  return typeof window !== "undefined" && window.innerWidth < 640 ? 280 : 340;
+}
+
+let ITEM_WIDTH = typeof window !== "undefined" ? getItemWidth() : 340;
+let STEP = ITEM_WIDTH + ITEM_GAP;
 const RULER_LINES = 80;
 
 function RulerLines() {
@@ -176,8 +181,14 @@ export default function RulerCarousel({ items }: { items: CarouselItem[] }) {
   useEffect(() => {
     const el = containerRef.current;
     if (el) setContainerWidth(el.offsetWidth);
-    const obs = new ResizeObserver(([entry]) => setContainerWidth(entry.contentRect.width));
+    const obs = new ResizeObserver(([entry]) => {
+      setContainerWidth(entry.contentRect.width);
+      ITEM_WIDTH = getItemWidth();
+      STEP = ITEM_WIDTH + ITEM_GAP;
+    });
     if (el) obs.observe(el);
+    ITEM_WIDTH = getItemWidth();
+    STEP = ITEM_WIDTH + ITEM_GAP;
     goTo(0);
     return () => obs.disconnect();
   }, [goTo]);

@@ -268,7 +268,7 @@ export default function DemoPage() {
             animate={{ opacity: 1, y: 0 }}
             className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] overflow-hidden"
           >
-            <div className="bg-[var(--bg)] min-h-96 flex items-center justify-center">
+            <div className="bg-[var(--bg)] min-h-64 md:min-h-96 flex items-center justify-center">
               {hasVideo ? (
                 <video src={demo.video} controls autoPlay className="w-full max-h-[600px]" />
               ) : (

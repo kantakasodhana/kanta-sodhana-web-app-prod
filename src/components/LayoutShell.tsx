@@ -8,6 +8,7 @@ import GrainOverlay from "@/components/GrainOverlay";
 import PageTransition from "@/components/PageTransition";
 import Preloader from "@/components/Preloader";
 import ClientCursor from "@/components/ClientCursor";
+import BackToTop from "@/components/BackToTop";
 
 const CHROMELESS_PATHS: string[] = [];
 
@@ -45,6 +46,7 @@ export default function LayoutShell({
         <main id="main-content" className="flex-1">{children}</main>
       </PageTransition>
       <Footer />
+      <BackToTop />
     </>
   );
 }

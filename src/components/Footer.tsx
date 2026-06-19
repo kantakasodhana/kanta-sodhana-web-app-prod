@@ -5,13 +5,13 @@ export default function Footer() {
   return (
     <footer className="relative border-t border-[var(--border)] bg-[var(--bg)] overflow-hidden">
       {/* Giant background word */}
-      <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 select-none font-mono text-[120px] md:text-[200px] font-bold leading-none text-[var(--text)]/[0.025] whitespace-nowrap">
+      <span className="pointer-events-none absolute -bottom-8 left-1/2 -translate-x-1/2 select-none font-mono text-[60px] sm:text-[120px] md:text-[200px] font-bold leading-none text-[var(--text)]/[0.025] whitespace-nowrap">
         KANTAKA
       </span>
 
       <div className="relative mx-auto max-w-7xl px-6 pt-16 pb-10">
         {/* Top row */}
-        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-10 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 md:gap-10 mb-16">
           {/* Brand */}
           <div>
             <div
