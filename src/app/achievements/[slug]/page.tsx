@@ -52,13 +52,7 @@ const ARTICLES: AchievementArticle[] = [
     caseId: "PS-02",
     prize: "Rs. 3,00,000",
     teamName: "Kantaka Sodhana",
-    team: [
-      { name: "Dr. Manohar Khandavalli", role: "Team Lead" },
-      { name: "Lakshmi Narayana Cherukuri", role: "AI/ML Engineer" },
-      { name: "Hambica Pedapudi", role: "Data Scientist" },
-      { name: "Bharath Varma Sangaraju", role: "Backend Engineer" },
-      { name: "Anudeep K", role: "Full Stack Developer" },
-    ],
+    team: [],
     problemStatement:
       "Healthcare insurance fraud in India often involves mismatches between radiological images (X-rays, CT scans, MRI) and the textual diagnostic reports accompanying insurance claims. Fraudulent actors submit radiology reports that do not correspond to the actual images, inflating conditions or fabricating findings to claim higher reimbursements under AB PM-JAY.",
     problemDetail:
@@ -123,11 +117,7 @@ const ARTICLES: AchievementArticle[] = [
     caseId: "PS-03",
     prize: "Rs. 2,00,000",
     teamName: "Sushurutha Health AI",
-    team: [
-      { name: "Bala Murali Krishna", role: "Team Lead" },
-      { name: "Meghana Thota", role: "AI/ML Engineer" },
-      { name: "Sumanth Naidu Mathireddy", role: "Full Stack Developer" },
-    ],
+    team: [],
     problemStatement:
       "The healthcare insurance ecosystem faces an increasing threat from forged and manipulated medical documents, including tampered discharge summaries, manipulated bills, fabricated prescriptions, and even deepfake-generated identity documents. These fraudulent documents are submitted as part of insurance claims to extract illegitimate reimbursements from public health programmes.",
     problemDetail:
@@ -349,32 +339,34 @@ export default function AchievementArticlePage() {
           </div>
         </motion.section>
 
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.25 }}
-        >
-          <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent)] mb-6">
-            The Team - {article.teamName}
-          </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {article.team.map((member) => (
-              <div
-                key={member.name}
-                className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
-              >
-                <p className="font-bold text-[var(--text)] mb-1">
-                  {member.name}
-                </p>
-                {member.role && (
-                  <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
-                    {member.role}
+        {article.team.length > 0 && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.25 }}
+          >
+            <p className="font-mono text-[10px] uppercase tracking-[0.3em] text-[var(--accent)] mb-6">
+              The Team - {article.teamName}
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              {article.team.map((member) => (
+                <div
+                  key={member.name}
+                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6"
+                >
+                  <p className="font-bold text-[var(--text)] mb-1">
+                    {member.name}
                   </p>
-                )}
-              </div>
-            ))}
-          </div>
-        </motion.section>
+                  {member.role && (
+                    <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--text-muted)]">
+                      {member.role}
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.section>
+        )}
 
         <motion.section
           initial={{ opacity: 0, y: 20 }}
